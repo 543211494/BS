@@ -3,73 +3,71 @@ use education;
 DROP TABLE IF EXISTS `user`;
 create table user
 (
-    uid           int primary key auto_increment COMMENT '用户id',
-    password      varchar(16)   not null COMMENT '用户密码',
-    email         varchar(16) not null COMMENT '用户邮箱',
-    power         varchar(16)   not null COMMENT '用户权限',
-    identity      varchar(32) unique  not null COMMENT '用户身份证号',
-    school        varchar(16)   not null COMMENT '用户所属学校',
-    college       varchar(32)   not null COMMENT '用户所属学院',
-    major         varchar(32)   not null COMMENT '用户所学专业名称',
-    fullName      varchar(16)   not null COMMENT '用户姓名',
-    studentId     varchar(16)   COMMENT '用户学号',
-    age           int           COMMENT '用户年龄',
-    sex           varchar(4)    not null COMMENT '用户性别',
-    qualification int default 0 COMMENT '用户保研资格',
-    isDelete    int           not null COMMENT '是否删除'
+    `uid`           int primary key auto_increment COMMENT '用户id',
+    `password`      varchar(16)   not null COMMENT '用户密码',
+    `email`         varchar(16) not null COMMENT '用户邮箱',
+    `power`         varchar(16)   not null COMMENT '用户权限',
+    `identity`      varchar(32) unique  not null COMMENT '用户身份证号',
+    `mid`           int           COMMENT '用户所属专业id',
+    `fullName`      varchar(16)   not null COMMENT '用户姓名',
+    `studentId`     varchar(16)   COMMENT '用户学号',
+    `age`           int           COMMENT '用户年龄',
+    `sex`           varchar(4)    not null COMMENT '用户性别',
+    `qualification` int default 0 COMMENT '用户保研资格',
+    `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '用户';
 
 DROP TABLE IF EXISTS `major`;
 create table major
 (
-    mid        int primary key auto_increment COMMENT '专业id',
-    university varchar(32) not null COMMENT '专业所属大学',
-    college    varchar(32) not null COMMENT '专业所属学院',
-    majorName  varchar(32) not null COMMENT '专业名称',
-    level      varchar(4)  not null COMMENT '专业学科评级',
-    isDelete    int           not null COMMENT '是否删除'
+    `mid`        int primary key auto_increment COMMENT '专业id',
+    `university` varchar(32) not null COMMENT '专业所属大学',
+    `college`    varchar(32) not null COMMENT '专业所属学院',
+    `majorName`  varchar(32) not null COMMENT '专业名称',
+    `level`      varchar(4)  not null COMMENT '专业学科评级',
+    `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '专业';
 
 DROP TABLE IF EXISTS `plan`;
 create table plan
 (
-    pid    int primary key auto_increment COMMENT '招生计划id',
-    mid    int not null COMMENT '专业id',
-    number int not null COMMENT '招生人数',
-    year   int not null COMMENT '招生年份',
-    isDelete    int           not null COMMENT '是否删除'
+    `pid`    int primary key auto_increment COMMENT '招生计划id',
+    `mid`    int not null COMMENT '专业id',
+    `number` int not null COMMENT '招生人数',
+    `year`   int not null COMMENT '招生年份',
+    `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '招生计划';
 
 DROP TABLE IF EXISTS `notice`;
 create table notice
 (
-    nid         int primary key auto_increment COMMENT '公告id',
-    content     varchar(1024) not null COMMENT '公告内容',
-    publishTime datetime      not null COMMENT '发布时间',
-    uid         int           not null COMMENT '发布者id',
-    isDelete    int           not null COMMENT '是否删除'
+    `nid`         int primary key auto_increment COMMENT '公告id',
+    `content`     varchar(1024) not null COMMENT '公告内容',
+    `publishTime` datetime      not null COMMENT '发布时间',
+    `uid`         int           not null COMMENT '发布者id',
+    `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '公告';
 
 DROP TABLE IF EXISTS `message`;
 create table message
 (
-    mid         int primary key auto_increment COMMENT '消息id',
-    content     varchar(1024) not null COMMENT '消息内容',
-    publishTime datetime      not null COMMENT '发布时间',
-    hasReaded   int           not null COMMENT '是否已读',
-    uid         int           not null COMMENT '接收者id',
-    isDelete    int           not null COMMENT '是否删除'
+    `mid`         int primary key auto_increment COMMENT '消息id',
+    `content`     varchar(1024) not null COMMENT '消息内容',
+    `publishTime` datetime      not null COMMENT '发布时间',
+    `hasReaded`   int           not null COMMENT '是否已读',
+    `uid`         int           not null COMMENT '接收者id',
+    `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '消息';
 
 DROP TABLE IF EXISTS `board`;
 create table board
 (
-    bid         int primary key auto_increment COMMENT '留言id',
-    content     varchar(1024) not null COMMENT '留言内容',
-    publishTime datetime      not null COMMENT '发布时间',
-    uid         int           not null COMMENT '发布者id',
-    pid         int           not null COMMENT '父留言id',
-    isDelete    int           not null COMMENT '是否删除'
+    `bid`         int primary key auto_increment COMMENT '留言id',
+    `content`     varchar(1024) not null COMMENT '留言内容',
+    `publishTime` datetime      not null COMMENT '发布时间',
+    `uid`         int           not null COMMENT '发布者id',
+    `pid`         int           not null COMMENT '父留言id',
+    `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '留言';
 
 DROP TABLE IF EXISTS `registration`;
