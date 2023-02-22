@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nwpu.user.mapper.UserMapper">
+    <!--  映射结果集，id为唯一标识符  -->
+    <resultMap id="user" type="org.nwpu.user.bean.User">
+        <!--    property为java类中的属性名，column为数据库中列名    -->
+        <id property="id" column="uid" jdbcType="INTEGER"></id>
+        <result property="identity" column="identity" jdbcType="VARCHAR"></result>
+        <result property="password" column="password" jdbcType="VARCHAR"></result>
+        <result property="email" column="email" jdbcType="VARCHAR"></result>
+        <result property="power" column="power" jdbcType="VARCHAR"></result>
+        <result property="university" column="university" jdbcType="VARCHAR"></result>
+        <result property="college" column="college" jdbcType="VARCHAR"></result>
+        <result property="majorName" column="majorName" jdbcType="VARCHAR"></result>
+        <result property="fullName" column="fullName" jdbcType="VARCHAR"></result>
+        <result property="studentId" column="studentId" jdbcType="VARCHAR"></result>
+        <result property="age" column="age" jdbcType="INTEGER"></result>
+        <result property="sex" column="sex" jdbcType="VARCHAR"></result>
+        <result property="qualification" column="qualification" jdbcType="INTEGER"></result>
+        <result property="year" column="year" jdbcType="INTEGER"></result>
+    </resultMap>
+
+    <select id="searchUserByUserName" resultMap="user">
+        SELECT uid,password, email, power, university, college, majorName,
+               identity, fullName, studentId, age, sex, qualification, year
+        FROM user,major
+        WHERE user.identity = #{userName} AND user.isDelete = 0 AND user.mid = major.mid AND major.isDelete = 0;
+    </select>
+</mapper>
