@@ -5,16 +5,16 @@ spring:
     name: api-gateway
   cloud:
     #gateway配置
-#    gateway:
-#      #路由规则,数据类型为List
-#      routes:
-#        #路由的唯一标识
-#        - id: order_route
-#          #需要转发的地址
-#          uri: lb://order-service
-#          #断言规则,用于路由规则的匹配
-#          predicates:
-#            - Path=/order/**
+    gateway:
+      #路由规则,数据类型为List
+      routes:
+        #路由的唯一标识
+        - id: order_route
+          #需要转发的地址
+          uri: lb://user-service
+          #断言规则,用于路由规则的匹配
+          predicates:
+            - Path=/api/*/user-service/**,/api/user-service/**
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
