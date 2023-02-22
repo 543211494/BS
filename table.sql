@@ -14,6 +14,7 @@ create table user
     `age`           int           COMMENT '用户年龄',
     `sex`           varchar(4)    not null COMMENT '用户性别',
     `qualification` int default 0 COMMENT '用户保研资格',
+    `year`          int  COMMENT '资格对应年份',
     `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '用户';
 
