@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @Component
-public class UserInterceptor implements HandlerInterceptor {
+public class GlobalInterceptor implements HandlerInterceptor {
 
     @Autowired
     @Qualifier(value = "redisTemplate")

@@ -16,7 +16,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Override
     public User searchUserByUserName(String userName) {
         return userMapper.searchUserByUserName(userName);
+    }
+
+    @Override
+    public boolean updatePassword(int id, String password) {
+        return userMapper.updatePassword(id, password);
+    }
+
+    @Override
+    public boolean updateEmail(int id, String email) {
+        return userMapper.updateEmail(id, email);
     }
 }

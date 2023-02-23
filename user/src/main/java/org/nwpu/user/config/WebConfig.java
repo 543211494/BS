@@ -1,6 +1,6 @@
 package org.nwpu.user.config;
 
-import org.nwpu.user.interceptor.UserInterceptor;
+import org.nwpu.user.interceptor.GlobalInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
-    private UserInterceptor userInterceptor;
+    private GlobalInterceptor userInterceptor;
 
     /**
      * 添加拦截器

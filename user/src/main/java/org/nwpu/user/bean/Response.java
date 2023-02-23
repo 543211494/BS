@@ -28,6 +28,16 @@ public class Response<T> {
     public static final String NO_POWER_ERROR = "203";
 
     /**
+     * 错误码：参数错误
+     */
+    public static final String PARAMETER_ERROR = "204";
+
+    /**
+     * 错误码：格式错误
+     */
+    public static final String FORMAT_ERROR = "205";
+
+    /**
      * 消息码
      */
     private Integer code;
@@ -45,6 +55,7 @@ public class Response<T> {
     public Response() {
         this.code = 200;
         this.message = "OK";
+        this.data=null;
     }
 
     /**

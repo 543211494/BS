@@ -26,4 +26,16 @@
         FROM user,major
         WHERE user.identity = #{userName} AND user.isDelete = 0 AND user.mid = major.mid AND major.isDelete = 0;
     </select>
+
+    <update id="updatePassword">
+        UPDATE user
+        SET password = #{password}
+        WHERE uid = #{id} AND isDelete = 0;
+    </update>
+
+    <update id="updateEmail">
+        UPDATE user
+        SET email = #{email}
+        WHERE uid = #{id} AND isDelete = 0;
+    </update>
 </mapper>

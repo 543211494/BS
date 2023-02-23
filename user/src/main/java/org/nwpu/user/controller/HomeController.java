@@ -44,11 +44,11 @@ public class HomeController {
             throw new RuntimeException(Response.LOGIN_ERROR);
         }
         /* 生成token并存储于redis中 */
-        String token = User.token();
+        String token = user.token();
         redisTemplate.opsForValue().set(token,user.toString(),1, TimeUnit.HOURS);
         user.setPassword(null);
         Response response = new Response<Object>();
-        Map<String,Object> data = new HashMap<String,   Object>();
+        Map<String,Object> data = new HashMap<String,Object>();
         data.put("token",token);
         data.put("user",user);
         response.setData(data);

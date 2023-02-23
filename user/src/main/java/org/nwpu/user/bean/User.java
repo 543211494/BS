@@ -115,8 +115,8 @@ public class User {
      * 生成登陆令牌,使用uuid作为token,保障token的唯一性
      * @return token
      */
-    public static String token(){
-        return UUID.randomUUID().toString();
+    public String token(){
+        return "token-"+this.id+"-"+UUID.randomUUID().toString();
     }
 
     /**
