@@ -91,7 +91,7 @@ create table volunteer
     `vid`      int primary key auto_increment COMMENT '志愿id',
     `rank`   int           not null COMMENT '第几志愿',
     `mid`      int           not null COMMENT '志愿对应的专业id',
-    `uid`      int           not null COMMENT '志愿所属用户id',
+    `rid`      int           not null COMMENT '所属志愿报名表id',
     `firstGrade`      int           not null COMMENT '初试得分',
     `secondGrade`      int           not null COMMENT '复试得分',
     `finalGrade`      int           not null COMMENT '最终得分',
