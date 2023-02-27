@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `major`;
 create table major
 (
     `mid`        int primary key auto_increment COMMENT '专业id',
+    `code` varchar(8) not null COMMENT '专业招生代码',
     `university` varchar(32) not null COMMENT '专业所属大学',
     `college`    varchar(32) not null COMMENT '专业所属学院',
     `majorName`  varchar(32) not null COMMENT '专业名称',
@@ -34,7 +35,10 @@ create table plan
 (
     `pid`    int primary key auto_increment COMMENT '招生计划id',
     `mid`    int not null COMMENT '专业id',
-    `number` int not null COMMENT '招生人数',
+    `numberA` int not null COMMENT '学硕招生人数',
+    `numberB` int not null COMMENT '专硕招生人数',
+    `numberC` int not null COMMENT '直博招生人数',
+    `number` int not null COMMENT '总招生人数',
     `year`   int not null COMMENT '招生年份',
     `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '招生计划';
@@ -74,9 +78,9 @@ create table board
 DROP TABLE IF EXISTS `registration`;
 create table registration
 (
-    `rid`      int primary key auto_increment COMMENT '订单id',
+    `rid`      int primary key auto_increment COMMENT '报名表id',
     `uid`      int          null COMMENT '填报人账号id',
-    `photo`    varchar(64)  COMMENT '填报人照片链接',
+    `photo`    varchar(128)  COMMENT '填报人照片链接',
     `address`  varchar(128) not null COMMENT '填报人联系地址',
     `phone`    varchar(16)  not null COMMENT '填报人联系电话',
     `current` int not null COMMENT '当前处理到的志愿',
@@ -91,10 +95,11 @@ create table volunteer
     `vid`      int primary key auto_increment COMMENT '志愿id',
     `rank`   int           not null COMMENT '第几志愿',
     `mid`      int           not null COMMENT '志愿对应的专业id',
-    `rid`      int           not null COMMENT '所属志愿报名表id',
+    `rid`      int           not null COMMENT '志愿所属报名表id',
     `firstGrade`      int           not null COMMENT '初试得分',
     `secondGrade`      int           not null COMMENT '复试得分',
     `finalGrade`      int           not null COMMENT '最终得分',
+    `type`       int        not null COMMENT '招生类型,0学，1专，2直',
     `isDelete` int default 0 not null COMMENT '是否删除'
 ) COMMENT '志愿';
 
@@ -105,5 +110,6 @@ create table admission
     `uid`      int        not null COMMENT '被录取人id',
     `mid`      int COMMENT '录取专业',
     `year`     int not null COMMENT '录取年份',
+    `type`       int        not null COMMENT '招生类型,0学，1专，2直',
     `isDelete` int        not null COMMENT '是否删除'
 ) COMMENT '录取';
