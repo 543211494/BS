@@ -22,17 +22,21 @@ public class GlobalExceptionResolver {
         MESSAGE.put(203,"权限不足！");
         MESSAGE.put(204,"参数错误！");
         MESSAGE.put(205,"参数格式错误！");
+        MESSAGE.put(206,"报名尚未开始！");
+        MESSAGE.put(207,"报名表数据过期，请重新填报！");
+        MESSAGE.put(208,"请勿重复报名！");
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public String processError(Exception e){
+        e.printStackTrace();
         int code = 400;
         /* 其他错误 */
         try{
             code = Integer.valueOf(e.getMessage());
         }catch (Exception exception){
-            exception.printStackTrace();
+            //exception.printStackTrace();
         }
         String message = MESSAGE.get(code);
         if (message==null){

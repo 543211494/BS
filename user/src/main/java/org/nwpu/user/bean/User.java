@@ -36,7 +36,7 @@ public class User {
     /**
      * 用户id
      */
-    private int id;
+    private Integer id;
 
     /**
      * 用户身份证号
@@ -86,7 +86,7 @@ public class User {
     /**
      * 用户年龄
      */
-    private int age;
+    private Integer age;
 
     /**
      * 用户性别
@@ -96,12 +96,12 @@ public class User {
     /**
      * 是否有保研资格
      */
-    private int qualification;
+    private Integer qualification;
 
     /**
      * 资格对应年份
      */
-    private int year;
+    private Integer year;
 
     /**
      * 将user实例转化为json字符串

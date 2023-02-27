@@ -38,6 +38,21 @@ public class Response<T> {
     public static final String FORMAT_ERROR = "205";
 
     /**
+     * 错误码：时间错误
+     */
+    public static final String TIME_ERROR = "206";
+
+    /**
+     * 错误码：提交报名表错误
+     */
+    public static final String REGISTRATION_INFO_ERROR = "207";
+
+    /**
+     * 错误码：重复报名错误
+     */
+    public static final String REPEAT_REGISTRATION_ERROR = "208";
+
+    /**
      * 消息码
      */
     private Integer code;

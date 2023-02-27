@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nwpu.user.mapper.MajorMapper">
+    <!--  映射结果集，id为唯一标识符  -->
+    <resultMap id="major" type="org.nwpu.user.bean.Major">
+        <!--    property为java类中的属性名，column为数据库中列名    -->
+        <id property="id" column="mid" jdbcType="INTEGER"></id>
+        <result property="code" column="code" jdbcType="VARCHAR"></result>
+        <result property="university" column="university" jdbcType="VARCHAR"></result>
+        <result property="college" column="college" jdbcType="VARCHAR"></result>
+        <result property="majorName" column="majorName" jdbcType="VARCHAR"></result>
+        <result property="level" column="level" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <select id="searchMajorsById" resultMap="major">
+        SELECT mid, code, university, college, majorName, level
+        FROM major
+        WHERE mid IN
+        (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        ) AND isDelete = 0
+    </select>
+
+    <select id="searchAllMajors" resultMap="major">
+        SELECT mid, code, university, college, majorName, level
+        FROM major
+        WHERE isDelete = 0
+    </select>
+</mapper>

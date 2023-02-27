@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,7 +46,14 @@ public class HomeController {
             throw new RuntimeException(Response.LOGIN_ERROR);
         }
         /* 生成token并存储于redis中 */
-        String token = user.token();
+        String token;
+        Set<String> tokens=redisTemplate.keys("token-"+user.getId()+"*");
+        /* 最多三点登录 */
+        if(tokens.size()>=3){
+            token = tokens.iterator().next();
+        }else {
+            token = user.token();
+        }
         redisTemplate.opsForValue().set(token,user.toString(),1, TimeUnit.HOURS);
         user.setPassword(null);
         Response response = new Response<Object>();

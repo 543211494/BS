@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiniu.cdn.CdnManager;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
@@ -43,6 +44,8 @@ public class QiniuOperator {
 
     private CdnManager cdnManager;
 
+    private BucketManager bucketManager;
+
     /**
      * 提交图片
      * @param file 图片文件
@@ -50,10 +53,11 @@ public class QiniuOperator {
      * @return 图片url
      * @throws IOException
      */
-    public String uploadImage(MultipartFile file, String fileName) throws IOException {
+    public String upload(MultipartFile file, String fileName) throws IOException {
         if(this.auth==null){
             this.auth = Auth.create(access, secret);
             this.cdnManager = new CdnManager(this.auth);
+            this.bucketManager = new BucketManager(this.auth,this.configuration);
         }
         Response response;
         try{
@@ -67,6 +71,28 @@ public class QiniuOperator {
         }
         /* 返回这张存储照片的地址 */
         return this.domain + JSONObject.parseObject(response.bodyString()).get("key");
+    }
+
+    /**
+     * 删除文件
+     * @param url 文件名
+     * @return 执行结果
+     */
+    public boolean delete(String url){
+        if(this.auth==null){
+            this.auth = Auth.create(access, secret);
+            this.cdnManager = new CdnManager(this.auth);
+            this.bucketManager = new BucketManager(this.auth,this.configuration);
+        }
+        try{
+            this.bucketManager.delete(this.spaceName,url.substring(this.domain.length()));
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(url);
+            System.out.println(url.substring(this.domain.length()));
+            return false;
+        }
+        return true;
     }
 }
 
