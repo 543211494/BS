@@ -30,10 +30,10 @@
     </resultMap>
 
     <insert id="insertRegistration" parameterType="org.nwpu.user.bean.Registration" useGeneratedKeys="true" keyProperty="registration.id" keyColumn="rid">
-        INSERT INTO registration(uid, photo, address, phone, current, year, type, isDelete)
+        INSERT INTO registration(uid, photo, address, phone, current, year, type,status, isDelete)
         VALUES (#{uid}, #{registration.photo}, #{registration.address},
                 #{registration.phone}, #{registration.current},
-                #{registration.year}, #{registration.type},0)
+                #{registration.year}, #{registration.type},0,0)
     </insert>
 
     <select id="searchRegistrationByUserId" resultMap="registration">

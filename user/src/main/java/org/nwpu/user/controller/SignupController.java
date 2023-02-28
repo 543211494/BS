@@ -3,10 +3,7 @@ package org.nwpu.user.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
-import org.nwpu.user.bean.Major;
-import org.nwpu.user.bean.Registration;
-import org.nwpu.user.bean.Response;
-import org.nwpu.user.bean.Volunteer;
+import org.nwpu.user.bean.*;
 import org.nwpu.user.service.SignupService;
 import org.nwpu.user.util.QiniuOperator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,10 +74,16 @@ public class SignupController {
         }
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
-        Integer id = Integer.valueOf(token.split("-")[1]);
+        User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if (user.getQualification()==0){
+            throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
+        }
         /* redis中的key */
-        String key = "registration-"+year+"-"+id;
+        String key = "registration-"+year+"-"+user.getId();
         Registration registration = this.createRegistration(key,year,step,type);
+        if(registration.isFinished()){
+            throw new RuntimeException(Response.REPEAT_REGISTRATION_ERROR);
+        }
         /* 图床中的文件名 */
         String photoName = UUID.randomUUID()+"."+extension;
         /* 执行操作 */
@@ -115,10 +118,16 @@ public class SignupController {
         }
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
-        Integer id = Integer.valueOf(token.split("-")[1]);
+        User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if (user.getQualification()==0){
+            throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
+        }
         /* redis中的key */
-        String key = "registration-"+year+"-"+id;
+        String key = "registration-"+year+"-"+user.getId();
         Registration registration = this.createRegistration(key,year,step,type);
+        if(registration.isFinished()){
+            throw new RuntimeException(Response.REPEAT_REGISTRATION_ERROR);
+        }
         /* 执行操作 */
         registration.setAddress(address);
         registration.setPhone(phone);
@@ -147,10 +156,16 @@ public class SignupController {
         }
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
-        Integer id = Integer.valueOf(token.split("-")[1]);
+        User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if (user.getQualification()==0){
+            throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
+        }
         /* redis中的key */
-        String key = "registration-"+year+"-"+id;
+        String key = "registration-"+year+"-"+user.getId();
         Registration registration = this.createRegistration(key,year,step,type);
+        if(registration.isFinished()){
+            throw new RuntimeException(Response.REPEAT_REGISTRATION_ERROR);
+        }
         /* 执行操作 */
         List<Major> majorList = signupService.searchMajorsById(majors);
         List<Volunteer> volunteerList = new ArrayList<Volunteer>();
@@ -186,16 +201,21 @@ public class SignupController {
                                      @RequestParam("type")Integer type){
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
-        Integer id = Integer.valueOf(token.split("-")[1]);
+        User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if (user.getQualification()==0){
+            throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
+        }
         /* redis中的key */
-        String key = "registration-"+year+"-"+id;
+        String key = "registration-"+year+"-"+user.getId();
         Registration registration = this.createRegistration(key,year,step,type);
         if(registration.isFinished()){
             throw new RuntimeException(Response.REPEAT_REGISTRATION_ERROR);
-        }else if (registration.getPhoto()==null||registration.getAddress()==null||registration.getVolunteers()==null||registration.getVolunteers().isEmpty()){
+        }else if (registration.getPhoto()==null||registration.getPhoto().isEmpty()
+                ||registration.getAddress()==null||registration.getAddress().isEmpty()
+                ||registration.getVolunteers()==null||registration.getVolunteers().isEmpty()){
             throw new RuntimeException(Response.REGISTRATION_INFO_ERROR);
         }
-        signupService.insertRegistration(registration,id);
+        signupService.insertRegistration(registration,user.getId());
         registration.setFinished(true);
         redisTemplate.opsForValue().set(key,registration.toString());
         Response response = new Response<Object>();
@@ -216,12 +236,15 @@ public class SignupController {
         if (year==null||year<0){
             throw new RuntimeException(Response.TIME_ERROR);
         }
-        Integer id = Integer.valueOf(token.split("-")[1]);
+        User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if (user.getQualification()==0){
+            throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
+        }
         /* redis中的key */
-        String key = "registration-"+year+"-"+id;
+        String key = "registration-"+year+"-"+user.getId();
         Registration registration = Registration.toObject((String) redisTemplate.opsForValue().get(key));
         if(registration==null){
-            registration = signupService.searchRegistrationByUserId(id,year);
+            registration = signupService.searchRegistrationByUserId(user.getId(), year);
             if (registration!=null){
                 registration.setStep(5);
                 registration.setFinished(true);
