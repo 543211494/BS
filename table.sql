@@ -86,6 +86,7 @@ create table registration
     `current` int not null COMMENT '当前处理到的志愿',
     `year`     int not null COMMENT '填报年份',
     `type`    int not null COMMENT '报考类型',
+    `status`   int not null COMMENT '报名状态，0未录取，1已录取，2所有志愿已处理完但未录取',
     `isDelete` int not null COMMENT '是否删除'
 ) COMMENT '报名表';
 
