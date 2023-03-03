@@ -1,5 +1,6 @@
 package org.nwpu.user.bean;
 
+import java.util.ArrayList;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.Data;
@@ -44,7 +45,7 @@ public class Registration {
     private Integer year;
 
     /**
-     * 报考类型,1是保研，2是考研
+     * 报考类型,1是保研，0是考研
      */
     private Integer type;
 
@@ -59,6 +60,11 @@ public class Registration {
     private Integer step;
 
     /**
+     * 包含的志愿个数
+     */
+    private Integer volunteerNumber;
+
+    /**
      * 报名是否已经最终确定
      */
     private boolean isFinished;
@@ -68,6 +74,7 @@ public class Registration {
         this.current = 1;
         this.type = 1;
         this.isFinished = false;
+        this.volunteerNumber = 0;
     }
 
     /**

@@ -29,17 +29,17 @@ public class Volunteer {
     /**
      * 初试得分
      */
-    private Integer firstGrade;
+    private Double firstGrade;
 
     /**
      * 复试得分
      */
-    private Integer secondGrade;
+    private Double secondGrade;
 
     /**
      * 最终得分
      */
-    private Integer finalGrade;
+    private Double finalGrade;
 
     /**
      * 招生类型,0学，1专，2直
@@ -47,9 +47,9 @@ public class Volunteer {
     private Integer type;
 
     public Volunteer() {
-        this.firstGrade=0;
-        this.secondGrade=0;
-        this.finalGrade=0;
+        this.firstGrade = 0.0;
+        this.secondGrade = 0.0;
+        this.finalGrade = 0.0;
     }
 
     /**

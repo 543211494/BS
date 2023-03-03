@@ -2,7 +2,6 @@ package org.nwpu.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.nacos.shaded.org.checkerframework.checker.units.qual.A;
 import org.nwpu.user.bean.*;
 import org.nwpu.user.service.SignupService;
 import org.nwpu.user.util.QiniuOperator;
@@ -40,16 +39,10 @@ public class SignupController {
     @Autowired
     private SignupService signupService;
 
-//    @RequestMapping(value = "/api/user-service/test",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-//    public String test(@RequestParam("test")Integer[] mids) {
-//        for (int i=0;i<mids.length;i++){
-//            System.out.println(mids[i]);
-//        }
-//        HashMap<String ,Object > map = new HashMap<>();
-//        Response response = new Response<Object>();
-//        response.setData(map);
-//        return response.toString();
-//    }
+    /**
+     * 每个报名表能包含的最大志愿数目
+     */
+    public static final int VOLUNTEER_NUMBER = 3;
 
     /**
      * 保存报名照片
@@ -183,6 +176,7 @@ public class SignupController {
             volunteerList.add(volunteer);
         }
         registration.setVolunteers(volunteerList);
+        registration.setVolunteerNumber(volunteerList.size());
         redisTemplate.opsForValue().set(key,registration.toString());
         Response response = new Response<Object>();
         response.setData(registration);
@@ -201,7 +195,12 @@ public class SignupController {
                                      @RequestParam("type")Integer type){
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
+        /* 报名未开始 */
+        if (year==null||year<0){
+            throw new RuntimeException(Response.TIME_ERROR);
+        }
         User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        /* 无报名资格 */
         if (user.getQualification()==0){
             throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
         }
@@ -212,7 +211,8 @@ public class SignupController {
             throw new RuntimeException(Response.REPEAT_REGISTRATION_ERROR);
         }else if (registration.getPhoto()==null||registration.getPhoto().isEmpty()
                 ||registration.getAddress()==null||registration.getAddress().isEmpty()
-                ||registration.getVolunteers()==null||registration.getVolunteers().isEmpty()){
+                ||registration.getVolunteers()==null||registration.getVolunteers().isEmpty()
+                ||registration.getVolunteers().size()>VOLUNTEER_NUMBER){
             throw new RuntimeException(Response.REGISTRATION_INFO_ERROR);
         }
         signupService.insertRegistration(registration,user.getId());
