@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nwpu.match.mapper.RegistrationMapper">
+    <!--  映射结果集，id为唯一标识符  -->
+    <resultMap id="registration" type="org.nwpu.match.bean.Registration">
+        <id property="id" column="rid" jdbcType="INTEGER"></id>
+        <result property="uid" column="uid" jdbcType="INTEGER"></result>
+        <result property="status" column="status" jdbcType="INTEGER"></result>
+        <result property="current" column="current" jdbcType="INTEGER"></result>
+        <result property="admissionType" column="admissionType" jdbcType="INTEGER"></result>
+        <result property="volunteerNumber" column="volunteerNumber" jdbcType="INTEGER"></result>
+        <association property="currentVolunteer" javaType="org.nwpu.match.bean.Volunteer">
+            <id property="id" column="vid" jdbcType="INTEGER"></id>
+            <result property="mid" column="mid" jdbcType="INTEGER"></result>
+            <result property="finalGrade" column="finalGrade" jdbcType="DOUBLE"></result>
+            <result property="type" column="type" jdbcType="INTEGER"></result>
+        </association>
+    </resultMap>
+
+    <select id="searchRegistrationsByMajor" resultMap="registration">
+        SELECT registration.rid,registration.uid,registration.status,registration.current,registration.volunteerNumber,
+               volunteer.vid,volunteer.mid,volunteer.finalGrade,volunteer.type
+        FROM registration,volunteer
+        WHERE registration.year = #{year} AND registration.type = 1 AND registration.isDelete = 0
+          AND volunteer.mid = #{mid} AND volunteer.rid = registration.rid
+          AND volunteer.`rank` = registration.current AND volunteer.isDelete = 0
+        ORDER BY volunteer.finalGrade DESC;
+    </select>
+
+    <update id="updateRegistration">
+        UPDATE registration
+        SET status = CASE rid 
+                <foreach collection="registrations" item="registration" separator=" ">
+                    WHEN #{registration.id} THEN #{registration.status}
+                </foreach>
+            END,
+            current = CASE rid
+                <foreach collection="registrations" item="registration" separator=" ">
+                    WHEN #{registration.id} THEN #{registration.current}
+                </foreach>
+            END,
+            admissionType = CASE rid
+            <foreach collection="registrations" item="registration" separator=" ">
+                WHEN #{registration.id} THEN #{registration.admissionType}
+            </foreach>
+            END
+        WHERE rid IN (<foreach collection="registrations" item="registration" separator=",">#{registration.id}</foreach>)
+    </update>
+
+    <select id="countRegistration" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM registration
+        WHERE registration.year = #{year} AND registration.type = 1
+          AND registration.status = #{status} AND registration.isDelete = 0;
+    </select>
+
+    <insert id="insertAdmission">
+        INSERT INTO admission(uid, mid, year, type, isDelete)
+        SELECT registration.uid,volunteer.mid,registration.year,registration.admissionType,0
+        FROM registration,volunteer
+        WHERE registration.status = 1 AND registration.isDelete = 0 AND registration.year = #{year}
+          AND volunteer.rid = registration.rid AND volunteer.`rank` = registration.current
+          AND registration.type = 1 AND volunteer.isDelete = 0;
+    </insert>
+</mapper>
