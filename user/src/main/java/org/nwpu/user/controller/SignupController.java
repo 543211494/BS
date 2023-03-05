@@ -261,7 +261,27 @@ public class SignupController {
     }
 
     /**
-     * 查询全部专业
+     * 查看某一年的招生专业
+     * @param year 年份
+     * @return
+     */
+    @RequestMapping(value = "/api/user-service/getAllMajorByYear",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    public String getAllMajorByYear(@RequestParam("year")Integer year){
+        String key = "major-"+year.intValue();
+        List<Major> majors = JSON.parseArray((String) redisTemplate.opsForValue().get(key),Major.class);
+        if(majors==null){
+            majors = signupService.searchAllMajors(year);
+            if(majors!=null){
+                redisTemplate.opsForValue().set(key,JSON.toJSONString(majors, SerializerFeature.WriteMapNullValue,SerializerFeature.WriteNullStringAsEmpty,SerializerFeature.WriteNullListAsEmpty));
+            }
+        }
+        Response response = new Response<Object>();
+        response.setData(majors);
+        return response.toString();
+    }
+
+    /**
+     * 查询全部专业(已废弃)
      * @return
      */
     @RequestMapping(value = "/api/user-service/getAllMajor",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
@@ -274,6 +294,30 @@ public class SignupController {
         }
         Response response = new Response<Object>();
         response.setData(majors);
+        return response.toString();
+    }
+
+    /**
+     * 开始报名，设置报名年份
+     * @param year 报名年份
+     * @return
+     */
+    @RequestMapping(value = "/api/admin/user-service/startSignup",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    public String startSignup(@RequestParam("year")Integer year){
+        redisTemplate.opsForValue().set("year",String.valueOf(year.intValue()));
+        Response response = new Response<Object>();
+        return response.toString();
+    }
+
+    /**
+     * 查看当前报名年份
+     * @return
+     */
+    @RequestMapping(value = "/api/user-service/getSignupYear",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    public String getSignupYear(){
+        Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
+        Response response = new Response<Object>();
+        response.setData(year);
         return response.toString();
     }
 

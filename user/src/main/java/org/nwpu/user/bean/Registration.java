@@ -1,6 +1,5 @@
 package org.nwpu.user.bean;
 
-import java.util.ArrayList;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.Data;

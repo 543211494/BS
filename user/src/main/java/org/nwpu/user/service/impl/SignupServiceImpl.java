@@ -49,4 +49,9 @@ public class SignupServiceImpl implements SignupService {
     public List<Major> searchAllMajors() {
         return majorMapper.searchAllMajors();
     }
+
+    @Override
+    public List<Major> searchAllMajors(Integer year) {
+        return majorMapper.searchAllMajorsByYear(year);
+    }
 }

@@ -58,6 +58,21 @@ public class Response<T> {
     public static final String NO_QUALIFICATION_ERROR = "209";
 
     /**
+     * 错误码：重复匹配错误
+     */
+    public static final String REPEAT_MATCH_ERROR = "210";
+
+    /**
+     * 错误码：删除用户错误
+     */
+    public static final String DELETE_USER_ERROR = "211";
+
+    /**
+     * 错误码：新增用户的身份证号已存在
+     */
+    public static final String REPEAT_USER_ERROR = "212";
+
+    /**
      * 消息码
      */
     private Integer code;

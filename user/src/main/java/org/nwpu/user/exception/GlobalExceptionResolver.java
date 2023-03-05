@@ -26,12 +26,14 @@ public class GlobalExceptionResolver {
         MESSAGE.put(207,"报名表数据过期，请重新填报！");
         MESSAGE.put(208,"请勿重复报名！");
         MESSAGE.put(209,"无报名资格！");
+        MESSAGE.put(211,"不能删除super用户！");
+        MESSAGE.put(212,"新增用户的身份证号已存在! ");
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public String processError(Exception e){
-        //e.printStackTrace();
+        e.printStackTrace();
         int code = 400;
         /* 其他错误 */
         try{

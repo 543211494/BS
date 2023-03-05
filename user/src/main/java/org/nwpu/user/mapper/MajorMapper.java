@@ -25,4 +25,10 @@ public interface MajorMapper {
      * @return 查询结果
      */
     public List<Major> searchAllMajors();
+
+    /**
+     * 查询某年招生全部专
+     * @return 查询结果
+     */
+    public List<Major> searchAllMajorsByYear(@Param("year") Integer year);
 }

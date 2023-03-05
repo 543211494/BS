@@ -22,12 +22,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updatePassword(int id, String password) {
+    public User searchUserById(Integer userId){
+        return userMapper.searchUserById(userId);
+    }
+
+    @Override
+    public boolean updatePassword(Integer id, String password) {
         return userMapper.updatePassword(id, password);
     }
 
     @Override
-    public boolean updateEmail(int id, String email) {
+    public boolean updateEmail(Integer id, String email) {
         return userMapper.updateEmail(id, email);
+    }
+
+    @Override
+    public boolean resetPassword(Integer userId) {
+        return userMapper.resetPassword(userId);
+    }
+
+    @Override
+    public boolean deleteUserById(Integer userId) {
+        return userMapper.deleteUserById(userId);
+    }
+
+    @Override
+    public boolean insertUser(User user, Integer mid) {
+        return userMapper.insertUser(user, mid);
     }
 }

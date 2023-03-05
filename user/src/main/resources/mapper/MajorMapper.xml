@@ -28,4 +28,10 @@
         FROM major
         WHERE isDelete = 0
     </select>
+
+    <select id="searchAllMajorsByYear" resultMap="major">
+        SELECT major.mid, major.code, major.university, major.college, major.majorName, major.level
+        FROM major INNER JOIN plan on plan.year = #{year} AND plan.isDelete = 0 AND major.mid = plan.mid
+        WHERE major.isDelete = 0;
+    </select>
 </mapper>

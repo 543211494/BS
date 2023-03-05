@@ -39,4 +39,10 @@ public interface SignupService {
      * @return 查询结果
      */
     public List<Major> searchAllMajors();
+
+    /**
+     * 查询某年招生的全部专业
+     * @return 查询结果
+     */
+    public List<Major> searchAllMajors(Integer year);
 }

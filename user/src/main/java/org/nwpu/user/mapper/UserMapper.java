@@ -33,4 +33,33 @@ public interface UserMapper {
      * @return 执行结果
      */
     public boolean updateEmail(@Param("id")int id,@Param("email")String email);
+
+    /**
+     * 重置密码
+     * @param userId 用户id
+     * @return 执行结果
+     */
+    public boolean resetPassword(@Param("userId") Integer userId);
+
+    /**
+     * 根据用户id查找用户
+     * @param userId 用户id
+     * @return
+     */
+    public User searchUserById(@Param("userId") Integer userId);
+
+    /**
+     * 根据用户id删除用户
+     * @param userId 用户id
+     * @return
+     */
+    public boolean deleteUserById(@Param("userId") Integer userId);
+
+    /**
+     * 新增用户
+     * @param user 用户对象
+     * @param mid 用户专业id
+     * @return
+     */
+    public boolean insertUser(@Param("user") User user,@Param("mid") Integer mid);
 }
