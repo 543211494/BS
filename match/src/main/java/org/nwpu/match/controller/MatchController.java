@@ -34,7 +34,7 @@ public class MatchController {
     public static final String MATCH_KEY = "match-lock";
 
     /**
-     * 匹配锁的key值
+     * 匹配年份的key值
      */
     public static final String MATCH_YEAR = "match-year";
 
@@ -63,7 +63,7 @@ public class MatchController {
     @Autowired
     private MatchService matchService;
 
-    @RequestMapping(value = "/api/super/match-service/startMatch",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/api/admin/match-service/startMatch",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     public String start(){
         if(!redisTemplate.opsForValue().setIfAbsent(MATCH_KEY,"lock")){
             throw new RuntimeException(Response.REPEAT_MATCH_ERROR);

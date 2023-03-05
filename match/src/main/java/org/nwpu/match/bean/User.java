@@ -84,11 +84,6 @@ public class User {
     private String studentId;
 
     /**
-     * 用户年龄
-     */
-    private Integer age;
-
-    /**
      * 用户性别
      */
     private String sex;
@@ -137,7 +132,7 @@ public class User {
     /**
      * 构造函数
      */
-    public User(int id, String identity, String password, String email, String power, String university, String college, String majorName, String fullName, String studentId, int age, String sex, int qualification, int year) {
+    public User(int id, String identity, String password, String email, String power, String university, String college, String majorName, String fullName, String studentId, String sex, int qualification, int year) {
         this.id = id;
         this.identity = identity;
         this.password = password;
@@ -148,7 +143,6 @@ public class User {
         this.majorName = majorName;
         this.fullName = fullName;
         this.studentId = studentId;
-        this.age = age;
         this.sex = sex;
         this.qualification = qualification;
         this.year = year;

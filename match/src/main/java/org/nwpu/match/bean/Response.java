@@ -58,7 +58,7 @@ public class Response<T> {
     public static final String NO_QUALIFICATION_ERROR = "209";
 
     /**
-     * 错误码：无报名资格错误
+     * 错误码：重复匹配错误
      */
     public static final String REPEAT_MATCH_ERROR = "210";
 
