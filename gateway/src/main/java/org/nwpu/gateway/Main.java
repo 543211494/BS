@@ -1,4 +1,4 @@
-package org.demo.gateway;
+package org.nwpu.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
