@@ -5,13 +5,12 @@ create table user
 (
     `uid`           int primary key auto_increment COMMENT '用户id',
     `password`      varchar(16)   not null COMMENT '用户密码',
-    `email`         varchar(16) not null COMMENT '用户邮箱',
+    `email`         varchar(16)   COMMENT '用户邮箱',
     `power`         varchar(16)   not null COMMENT '用户权限',
     `identity`      varchar(32) unique  not null COMMENT '用户身份证号',
     `mid`           int           COMMENT '用户所属专业id',
     `fullName`      varchar(16)   not null COMMENT '用户姓名',
     `studentId`     varchar(16)   COMMENT '用户学号',
-    `age`           int           COMMENT '用户年龄',
     `sex`           varchar(4)    not null COMMENT '用户性别',
     `qualification` int default 0 COMMENT '用户保研资格',
     `year`          int  COMMENT '资格对应年份',
@@ -72,7 +71,7 @@ create table board
     `content`     varchar(1024) not null COMMENT '留言内容',
     `publishTime` datetime      not null COMMENT '发布时间',
     `uid`         int           not null COMMENT '发布者id',
-    `pid`         int           not null COMMENT '父留言id',
+    `pid`         int           COMMENT '父留言id',
     `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '留言';
 
@@ -117,3 +116,4 @@ create table admission
     `type`       int        not null COMMENT '招生类型,0学，1专，2直',
     `isDelete` int        not null COMMENT '是否删除'
 ) COMMENT '录取';
+
