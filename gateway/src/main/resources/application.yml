@@ -8,6 +8,12 @@ spring:
     gateway:
       #路由规则,数据类型为List
       routes:
+        - id: board-service_route
+          #需要转发的地址
+          uri: lb://board-service
+          #断言规则,用于路由规则的匹配
+          predicates:
+            - Path=/api/*/board-service/**,/api/board-service/**
         - id: match_service_route
           #需要转发的地址
           uri: lb://match-service
