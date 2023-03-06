@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.nwpu.board.mapper.BoardMapper">
+    <!--  映射结果集，id为唯一标识符  -->
+    <resultMap id="comment" type="org.nwpu.board.bean.Comment">
+        <id property="id" column="pbid" jdbcType="INTEGER"></id>
+        <result property="uid" column="puid" jdbcType="INTEGER"></result>
+        <result property="userName" column="puserName" jdbcType="VARCHAR"></result>
+        <result property="content" column="pcontent" jdbcType="VARCHAR"></result>
+        <result property="publishTime" column="ppublishTime" jdbcType="TIMESTAMP"></result>
+        <collection property="comments" ofType="org.nwpu.board.bean.Comment">
+            <id property="id" column="rbid" jdbcType="INTEGER"></id>
+            <result property="uid" column="ruid" jdbcType="INTEGER"></result>
+            <result property="userName" column="ruserName" jdbcType="VARCHAR"></result>
+            <result property="content" column="rcontent" jdbcType="VARCHAR"></result>
+            <result property="publishTime" column="rpublishTime" jdbcType="TIMESTAMP"></result>
+        </collection>
+    </resultMap>
+
+    <insert id="insertComment" parameterType="org.nwpu.board.bean.Comment" useGeneratedKeys="true" keyProperty="comment.id" keyColumn="bid">
+        INSERT INTO board(content, publishTime, uid, userName, pid, isDelete)
+        VALUES (#{comment.content},#{comment.publishTime},#{comment.uid},
+                #{comment.userName},#{pid},0);
+    </insert>
+
+    <update id="deleteComment">
+        UPDATE board
+        SET board.isDelete = 1
+        WHERE board.bid = #{bid} OR board.pid = #{bid};
+    </update>
+    <select id="searchComments" resultMap="comment">
+        SELECT p.bid pbid, p.uid puid,p.userName puserName,p.content pcontent,p.publishTime ppublishTime,
+               reply.bid rbid,reply.uid ruid,reply.userName ruserName,reply.content rcontent,reply.publishTime rpublishTime
+        FROM (SELECT*
+              FROM board
+              WHERE board.isDelete = 0 AND board.pid is null
+              ORDER BY board.publishTime
+                  LIMIT #{start},#{number}) as p LEFT JOIN board as reply ON p.bid = reply.pid AND reply.isDelete = 0;
+    </select>
+</mapper>
