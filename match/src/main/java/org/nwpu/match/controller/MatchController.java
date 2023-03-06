@@ -84,14 +84,14 @@ public class MatchController {
         return response.toString();
     }
 
-    @RequestMapping(value = "/api/match-service/test",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-    public String test(){
-        redisTemplate.opsForValue().set("year","2022");
-        redisTemplate.delete(MATCH_KEY);
-        redisTemplate.delete(MATCH_YEAR);
-        redisTemplate.delete(MATCH_NUMBER);
-        return this.start();
-    }
+//    @RequestMapping(value = "/api/match-service/test",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+//    public String test(){
+//        redisTemplate.opsForValue().set("year","2022");
+//        redisTemplate.delete(MATCH_KEY);
+//        redisTemplate.delete(MATCH_YEAR);
+//        redisTemplate.delete(MATCH_NUMBER);
+//        return this.start();
+//    }
 
     /**
      * 处理消息
