@@ -68,6 +68,9 @@ public class SignupController {
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
         User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if(user==null){
+            throw new RuntimeException(Response.TOKEN_ERROR);
+        }
         if (user.getQualification()==0){
             throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
         }
@@ -112,6 +115,9 @@ public class SignupController {
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
         User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if(user==null){
+            throw new RuntimeException(Response.TOKEN_ERROR);
+        }
         if (user.getQualification()==0){
             throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
         }
@@ -150,6 +156,9 @@ public class SignupController {
         /* 招生年份 */
         Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
         User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if(user==null){
+            throw new RuntimeException(Response.TOKEN_ERROR);
+        }
         if (user.getQualification()==0){
             throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
         }
@@ -200,6 +209,9 @@ public class SignupController {
             throw new RuntimeException(Response.TIME_ERROR);
         }
         User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if(user==null){
+            throw new RuntimeException(Response.TOKEN_ERROR);
+        }
         /* 无报名资格 */
         if (user.getQualification()==0){
             throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
@@ -237,6 +249,9 @@ public class SignupController {
             throw new RuntimeException(Response.TIME_ERROR);
         }
         User user = User.toObject((String) redisTemplate.opsForValue().get(token));
+        if(user==null){
+            throw new RuntimeException(Response.TOKEN_ERROR);
+        }
         if (user.getQualification()==0){
             throw new RuntimeException(Response.NO_QUALIFICATION_ERROR);
         }

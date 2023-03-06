@@ -8,6 +8,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * redis配置类
+ * @author lzy
+ */
 @Configuration
 public class RedisConfig {
 
