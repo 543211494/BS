@@ -71,6 +71,7 @@ create table board
     `content`     varchar(1024) not null COMMENT '留言内容',
     `publishTime` datetime      not null COMMENT '发布时间',
     `uid`         int           not null COMMENT '发布者id',
+    `userName`      varchar(16)   not null COMMENT '发布者姓名',
     `pid`         int           COMMENT '父留言id',
     `isDelete`    int           not null COMMENT '是否删除'
 ) COMMENT '留言';
@@ -116,4 +117,3 @@ create table admission
     `type`       int        not null COMMENT '招生类型,0学，1专，2直',
     `isDelete` int        not null COMMENT '是否删除'
 ) COMMENT '录取';
-
