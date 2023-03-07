@@ -73,6 +73,16 @@ public class Response<T> {
     public static final String REPEAT_USER_ERROR = "212";
 
     /**
+     * 错误码：邮箱有误
+     */
+    public static final String EMAIL_ERROR = "213";
+
+    /**
+     * 错误码：验证码错误
+     */
+    public static final String CODE_ERROR = "214";
+
+    /**
      * 消息码
      */
     private Integer code;

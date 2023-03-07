@@ -28,6 +28,8 @@ public class GlobalExceptionResolver {
         MESSAGE.put(209,"无报名资格！");
         MESSAGE.put(211,"不能删除super用户！");
         MESSAGE.put(212,"新增用户的身份证号已存在! ");
+        MESSAGE.put(213,"用户邮箱错误或未设置邮箱！");
+        MESSAGE.put(214,"验证码错误! ");
     }
 
     @ExceptionHandler(Exception.class)

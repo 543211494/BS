@@ -62,7 +62,12 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>7.2.7</version>
         </dependency>
-
+        <!--  发送邮件用到的包  -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.6</version>
+        </dependency>
     </dependencies>
 
 </project>
