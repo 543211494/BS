@@ -44,3 +44,8 @@ year表示报名年份，userId表示用户id，如：registration-2022-1
 
 搜索留言的缓存key,其value值为Comment对象数组的JSON字符串
 其中page为页码，number为一页的留言数
+
+# 10.code-{identity}
+
+用于重置密码的邮箱验证码,identity为用户帐号
+如：code-360203200203081256
