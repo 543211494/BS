@@ -8,6 +8,7 @@ import org.nwpu.match.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,7 +27,28 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public List<Registration> searchRegistrationsByMajor(Integer year, Integer mid) {
-        return registrationMapper.searchRegistrationsByMajor(year, mid);
+        List<Registration> registrations = registrationMapper.searchRegistrationsByMajor(year, mid);
+        registrations.sort(new Comparator<Registration>(){
+            @Override
+            public int compare(Registration registration1, Registration registration2) {
+                if(registration1.getCurrentVolunteer().getFinalGrade().doubleValue()>registration2.getCurrentVolunteer().getFinalGrade().doubleValue()){
+                    return -1;
+                }else {
+                    return 1;
+                }
+            }
+        });
+//        StringBuffer buffer = new StringBuffer();
+//        buffer.append("[");
+//        for(int i = 0;i<registrations.size();i++){
+//            if(i!=0){
+//                buffer.append(",");
+//            }
+//            buffer.append(registrations.get(i).getCurrentVolunteer().getFinalGrade().doubleValue());
+//        }
+//        buffer.append("]");
+//        System.out.println(buffer.toString());
+        return registrations;
     }
 
     @Override

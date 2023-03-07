@@ -27,6 +27,16 @@ public class RabbitMQConfig {
     public final static String ROUTING_KEY = "match";
 
     /**
+     * 用于测试的路由关键词
+     */
+    public final static String TEST_ROUTING_KEY = "test-match";
+
+    /**
+     * 用于测试的消息队列名称
+     */
+    public final static String TEST_QUEUE_NAME = "test-mathc-queue";
+
+    /**
      * 声明交换机
      * @return
      */
@@ -43,6 +53,20 @@ public class RabbitMQConfig {
     public Queue bootQueue(){
         return QueueBuilder.nonDurable(QUEUE_NAME).build();
         //return QueueBuilder.durable(QUEUE_NAME).build();
+    }
+
+    /**
+     * 声明队列
+     * @return
+     */
+    @Bean("testQueue")
+    public Queue testQueue(){
+        return QueueBuilder.nonDurable(TEST_QUEUE_NAME).build();
+    }
+
+    @Bean
+    public Binding bindTestQueueExchange(@Qualifier("testQueue") Queue queue,@Qualifier("bootExchange") Exchange exchange){
+        return BindingBuilder.bind(queue).to(exchange).with(TEST_ROUTING_KEY).noargs();
     }
 
     /**

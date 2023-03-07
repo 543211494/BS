@@ -32,7 +32,7 @@ public class GlobalExceptionResolver {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public String processError(Exception e){
-        //e.printStackTrace();
+        e.printStackTrace();
         int code = 400;
         /* 其他错误 */
         try{

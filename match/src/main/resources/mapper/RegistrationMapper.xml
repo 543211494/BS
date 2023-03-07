@@ -23,9 +23,18 @@
         FROM registration,volunteer
         WHERE registration.year = #{year} AND registration.type = 1 AND registration.isDelete = 0
           AND volunteer.mid = #{mid} AND volunteer.rid = registration.rid
-          AND volunteer.`rank` = registration.current AND volunteer.isDelete = 0
-        ORDER BY volunteer.finalGrade DESC;
+          AND volunteer.`rank` = registration.current AND volunteer.isDelete = 0;
     </select>
+
+<!--    <select id="searchRegistrationsByMajor" resultMap="registration">-->
+<!--        SELECT registration.rid,registration.uid,registration.status,registration.current,registration.volunteerNumber,-->
+<!--               volunteer.vid,volunteer.mid,volunteer.finalGrade,volunteer.type-->
+<!--        FROM registration,volunteer-->
+<!--        WHERE registration.year = #{year} AND registration.type = 1 AND registration.isDelete = 0-->
+<!--          AND volunteer.mid = #{mid} AND volunteer.rid = registration.rid-->
+<!--          AND volunteer.`rank` = registration.current AND volunteer.isDelete = 0-->
+<!--        ORDER BY volunteer.finalGrade DESC;-->
+<!--    </select>-->
 
     <update id="updateRegistration">
         UPDATE registration

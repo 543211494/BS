@@ -16,9 +16,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 /**
  * 匹配控制类
@@ -84,14 +86,84 @@ public class MatchController {
         return response.toString();
     }
 
-//    @RequestMapping(value = "/api/match-service/test",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-//    public String test(){
-//        redisTemplate.opsForValue().set("year","2022");
-//        redisTemplate.delete(MATCH_KEY);
-//        redisTemplate.delete(MATCH_YEAR);
-//        redisTemplate.delete(MATCH_NUMBER);
-//        return this.start();
-//    }
+    /**
+     * 用于测试匹配算法性能的接口,正式版本需删除
+     * @return
+     */
+    @RequestMapping(value = "/api/match-service/test",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    public String test(@RequestParam("type")Integer type){
+        redisTemplate.opsForValue().set("year","2022");
+        redisTemplate.delete(MATCH_KEY);
+        redisTemplate.delete(MATCH_YEAR);
+        redisTemplate.delete(MATCH_NUMBER);
+        if(type.intValue()==1){
+            redisTemplate.opsForValue().set("start",String.valueOf(new Date().getTime()));
+            return this.start();
+        }else {
+            redisTemplate.opsForValue().set("start",String.valueOf(new Date().getTime()));
+            rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE_NAME,RabbitMQConfig.TEST_ROUTING_KEY,"test");
+            return "test";
+        }
+    }
+
+    /**
+     * 用于测试算法的消息处理函数，正式版本需删除
+     */
+    @RabbitListener(queues = RabbitMQConfig.TEST_QUEUE_NAME)
+    public void testMatch(Message message){
+        if(!redisTemplate.opsForValue().setIfAbsent(MATCH_KEY,"lock")){
+            throw new RuntimeException(Response.REPEAT_MATCH_ERROR);
+        }
+        /* 招生年份 */
+        Integer year = Integer.valueOf((String)redisTemplate.opsForValue().get("year"));
+        /* 报名未开始 */
+        if (year==null||year<0){
+            redisTemplate.delete(MATCH_KEY);
+            throw new RuntimeException(Response.TIME_ERROR);
+        }
+        /* 关闭报名通道 */
+        redisTemplate.opsForValue().set("year","-1");
+        /* 防止重复开始匹配 */
+        redisTemplate.opsForValue().set(MATCH_YEAR,String.valueOf(year));
+        List<Plan> plans = matchService.searchPlans(year);
+        List<Registration> registrations;
+        Registration registration;
+        Plan plan;
+        while (matchService.hasUnprocessedRegistration(year)){
+            for(int i = 0;i<plans.size();i++){
+                plan = plans.get(i);
+                registrations = matchService.searchRegistrationsByMajor(year,plans.get(i).getMid());
+                for(int j = 0;j<registrations.size();j++){
+                    registration = registrations.get(j);
+                    /* 更新报名表状态 */
+                    if(0<=j&&j<plan.getNumberA()){
+                        registration.setStatus(Registration.ACCEPTED);
+                        registration.setAdmissionType(Plan.A);
+                    }else if(j<(plan.getNumberA()+plan.getNumberB())){
+                        registration.setStatus(Registration.ACCEPTED);
+                        registration.setAdmissionType(Plan.B);
+                    }else if(j<plan.getNumber()){
+                        registration.setStatus(Registration.ACCEPTED);
+                        registration.setAdmissionType(Plan.C);
+                    } else {
+                        registration.setCurrent(registration.getCurrent()+1);
+                        if(registration.getCurrent()<=registration.getVolunteerNumber()){
+                            registration.setStatus(Registration.UNACCEPTED);
+                        }else {
+                            registration.setStatus(Registration.PROCESSED);
+                        }
+                    }
+                }
+                /*  更新数据库 */
+                matchService.updateRegistration(registrations);
+            }
+        }
+        /* 所有志愿均已处理完 */
+        matchService.insertAdmission(year);
+//        long start = Long.valueOf((String)redisTemplate.opsForValue().get("start")).longValue();
+//        long end = new Date().getTime();
+//        redisTemplate.opsForValue().set("time",String.valueOf(end-start));
+    }
 
     /**
      * 处理消息
@@ -146,6 +218,9 @@ public class MatchController {
                 /* 所有志愿均已处理完 */
                 matchService.insertAdmission(year);
                 redisTemplate.delete(MATCH_KEY);
+//                long start = Long.valueOf((String)redisTemplate.opsForValue().get("start")).longValue();
+//                long end = new Date().getTime();
+//                redisTemplate.opsForValue().set("time",String.valueOf(end-start));
             }
         }
     }
