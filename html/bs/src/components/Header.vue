@@ -1,72 +1,123 @@
 <template>
-    <!-- 顶部导航栏 -->
-    <div class="nav">
-        <div class="nav-left">
-            <div class="clearfix">
-            <img class="nav-img" :src="require('../assets/img/logo.jpeg')"/>
-            <p>欢迎使用招生择校系统留言板</p>
+        <!-- 导航栏 -->
+        <div class="nav">
+            <div class="nav-logo">
+                <img class="nav-img" :src="require('../assets/img/logo.jpeg')"/>
+                <div class="nav-info">
+                    <p>基于稳定匹配的招生择校系统</p>
+                    <p>全国硕士研究生推免报名网站</p>
+                </div>
             </div>
-            <div>首页</div>
-            <div>首页</div>
-            <div>首页</div>
-            <div>首页</div>
-            <div>首页</div>
+            <div class="nav-choice">
+                <div class="nav-choice-left">
+                    <div>首页</div>
+                    <div>专业查询</div>
+                    <div>录取查询</div>
+                    <div>推免报名</div>
+                    <div>留言板</div>
+                </div>
+                <div class="nav-choice-right">
+                    <div v-if="hasLogin">退出登录</div>
+                    <div v-else>登录</div>
+                </div>
+            </div>
         </div>
-        <div class="nav-right">
-            <div>退出登录</div>
-        </div>
-    </div>
 </template>
 
 <script>
 export default {
-
+    data(){
+        return{
+            hasLogin:true,
+        }
+    },
+    methods:{
+        goto(path){
+            this.$router.push({
+                path:path
+            })
+        }
+    }
 }
 </script>
 
 <style scoped>
-/* 顶部导航栏 */
+/* 导航栏 */
 .nav{
     display: flex;
+    width: 100%;
+}
+.user-container-right{
+    border:1px red solid;
+    box-sizing:border-box;
+}
+/* .nav *{
+    border:1px red solid;
+    box-sizing:border-box;
+} */
+/* logo */
+.nav-logo{
+    padding: 5px;
+    display: flex;
+    align-items:center;
+}
+.nav-img{
+    width: 60px;
+    height: 60px;
+}
+.nav-info{
+    justify-content: center;
+}
+.nav-info >p:nth-child(1){
+    color: #434343;
+    font-size: 22px;
+}
+.nav-info >p:nth-child(2){
+    color: #BABABA;
+    letter-spacing:6px;
+}
+/* 跳转网址 */
+.nav-choice{
+    width: 60%;
+    display: flex;
     justify-content:space-between;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 40px;
-    padding-right: 40px;
+}
+.nav-choice-left{
+    display: flex;
+    justify-content: space-around;
+    line-height: 70px;
+}
+.nav-choice-left > div,.nav-choice-right > div{
+    color: #7B7A7A;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.nav-choice-left > div:hover,.nav-choice-right > div:hover{
+    background: #E8E7E3;
+}
+.nav-choice-right{
+    display: flex;
+    line-height: 70px;
+}
+@media screen and (max-width: 900px){
+.nav-info{
+    display: none;
 }
 .nav-img{
     width: 30px;
     height: 30px;
 }
-.nav-left{
-    display: flex;
-    justify-content:space-between;
-    width: 50%;
+.nav-choice-left,.nav-choice-right{
+    line-height: 40px;
 }
-.nav-left>div:nth-child(1) *{
-    float: left;
+.nav-choice-left > div,.nav-choice-right > div{
+    font-size: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
 }
-.nav-right > div{
-    cursor: pointer;
-    line-height: 30px;
-}
-.nav-left > div:not(:first-child){
-    cursor: pointer;
-    line-height: 30px;
-}
-.nav-right > div:hover,.nav-left > div:not(:first-child):hover{
-    color: #429DE4;
-}
-@media screen and (max-width: 900px){
-.nav{
-    padding-left: 5px;
-    padding-right: 5px;
-}
-.nav-left{
-    width: 80%;
-}
-.nav-left p{
-    display: none;
+.nav-choice{
+    width: 85%;
 }
 }
 </style>

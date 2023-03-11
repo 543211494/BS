@@ -6,32 +6,37 @@ const Board = () => import('@/components/board/Board');
 const AllMessage = () => import('@/components/board/AllMessage');
 const MyMessage = () => import('@/components/board/MyMessage');
 const SubmitMessage = () => import('@/components/board/SubmitMessage');
+const User = () => import('@/components/user/User')
 
 const router = new VueRouter({
-    routes:[{
+    routes: [{
         path: '/login',
         component: Login,
         children: [],
-    },{
+    }, {
         path: '/resetPassword',
         component: ResetPassword,
         children: [],
-    },{
+    }, {
         path: '/board',
         component: Board,
         children: [{
             path: 'allMessage',
-            component:AllMessage
-        },{
+            component: AllMessage
+        }, {
             path: 'myMessage',
-            component:MyMessage
-        },{
+            component: MyMessage
+        }, {
             path: 'submitMessage',
-            component:SubmitMessage
+            component: SubmitMessage
         }],
+    }, {
+        path: '/user',
+        component: User,
+        children: []
     }]
 })
-router.beforeEach((to, from, next) =>{
+router.beforeEach((to, from, next) => {
     next();
 })
 
