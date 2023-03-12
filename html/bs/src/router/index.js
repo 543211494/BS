@@ -10,6 +10,9 @@ const User = () => import('@/components/user/User');
 const UserInfo = () => import('@/components/user/UserInfo');
 const ResetInfo = () => import('@/components/user/ResetInfo');
 
+const AdminMain = () => import('@/components/admin/AdminMain')
+const AdminHome = () => import('@/components/admin/adminHome/AdminHome')
+
 const router = new VueRouter({
     routes: [{
         path: '/login',
@@ -43,7 +46,20 @@ const router = new VueRouter({
             path: 'resetInfo',
             component: ResetInfo,
             children: []
-        }]
+        }],
+        children: []
+    }, 
+    
+    
+    /* 以上是刘智宇添加的页面，以下是郝靖东添加的页面 */
+    {
+        path: '/admin',
+        component: AdminMain,
+        redirect: '/admin/home',
+        children: [{
+            path: '/admin/home',
+            component: AdminHome
+        },]
     }]
 })
 router.beforeEach((to, from, next) => {
