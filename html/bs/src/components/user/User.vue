@@ -13,8 +13,8 @@
                     </div>
                     <div class="line"></div>
                     <div class="user-container-left-choice">
-                        <router-link to="#" active-class="active"><i class="el-icon-user"></i>个人信息</router-link>
-                        <router-link to="#" active-class="active"><i class="el-icon-edit"></i>修改信息</router-link>
+                        <router-link to="/user/userInfo" active-class="active"><i class="el-icon-user"></i>个人信息</router-link>
+                        <router-link to="/user/resetInfo" active-class="active"><i class="el-icon-edit"></i>修改信息</router-link>
                         <router-link to="#" active-class="active"><i class="el-icon-search"></i>资格查询</router-link>
                         <a><i class="el-icon-refresh-left"></i>退出登录</a>
                     </div>
@@ -46,7 +46,7 @@ export default {
                 path:path
             })
         }
-    }
+    },
 }
 </script>
 

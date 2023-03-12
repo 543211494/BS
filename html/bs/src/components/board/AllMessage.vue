@@ -90,7 +90,6 @@
         </div>
         <!-- 回复评论 -->
         <el-dialog
-            class="dialog"
             title="回复评论"
             center
             width="70%"
