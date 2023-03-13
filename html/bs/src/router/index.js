@@ -129,7 +129,7 @@ const router = new VueRouter({
             path: '/teacher/stu/detail', //query 传参
             component: TeacherStuDetail
         }, {
-            path: '/teacher/stu/score',
+            path: '/teacher/stu/score', //query 传参
             component: TeacherStuScore
         }]
     }]

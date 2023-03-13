@@ -34,78 +34,52 @@ export default {
           path: '/admin/home',
           label: '首页',
           icon: 's-home'
-        },
-        {
+        }, {
           label: '用户管理',
           icon: 'user',
           children: [
             {
-              path: '/admin/user/add',
-              label: '添加用户',
-              icon: 'plus'
-            },
-            {
-              path: '/admin/user/list',
+              path: '/admin/user',
               label: '用户列表',
               icon: 'user'
+            },
+            {
+              path: '/admin/user/add',
+              label: '新增用户',
+              icon: 'plus'
             }
           ]
-        },
-        // {
-        //   label: '公告管理',
-        //   icon: 'tickets',
-        //   children: [
-        //     {
-        //       path: '/adminArticleUpdate',
-        //       name: 'adminArticleUpdate',
-        //       label: '新建公告',
-        //       icon: 'plus'
-        //     },
-        //     {
-        //       path: '/adminArticle',
-        //       name: 'adminArticle',
-        //       label: '全部公告',
-        //       icon: 'document-copy'
-        //     }
-        //   ]
-        // },
-        
-        // {
-        //   label: '分队管理',
-        //   icon: 'attract',
-        //   children: [
-        //     {
-        //       path: '/adminTeamAdd',
-        //       name: 'adminTeamAdd',
-        //       label: '新建分队',
-        //       icon: 'plus'
-        //     },
-        //     {
-        //       path: '/adminTeam',
-        //       name: 'adminTeam',
-        //       label: '全部分队',
-        //       icon: 'attract'
-        //     }
-        //   ]
-        // },
-        // {
-        //   label: '题目管理',
-        //   icon: 'files',
-        //   children: [
-        //     {
-        //       path: '/adminQuestionAdd',
-        //       name: 'adminQuestionAdd',
-        //       label: '新建题目',
-        //       icon: 'plus'
-        //     },
-        //     {
-        //       path: '/adminQuestion',
-        //       name: 'adminQuestion',
-        //       label: '全部题目',
-        //       icon: 'files'
-        //     }
-        //   ]
-        // }
+        }, {
+          label: '公告管理',
+          icon: 'user',
+          children: [
+            {
+              path: '/admin/notice',
+              label: '公告列表',
+              icon: 'user'
+            },
+            {
+              path: '/admin/notice/add',
+              label: '新增公告',
+              icon: 'plus'
+            }
+          ]
+        }, {
+          label: '专业管理',
+          icon: 'user',
+          children: [
+            {
+              path: '/admin/major',
+              label: '专业列表',
+              icon: 'user'
+            },
+            {
+              path: '/admin/major/add',
+              label: '新增用户',
+              icon: 'plus'
+            }
+          ]
+        }, 
       ]
     }
   },
@@ -118,12 +92,8 @@ export default {
     // },
     clickMenu (item, fitem) {
       console.log(item, fitem)
-      this.$router.push(
-        {
-          path: item.path
-        }
-      )
-      location.reload()
+      this.$router.push({ path: item.path })
+      // location.reload()
       // if (fitem) {
       //   this.$store.commit('selectTab', [{'label': fitem.label}, item])
       // } else {

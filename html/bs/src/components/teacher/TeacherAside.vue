@@ -31,81 +31,29 @@ export default {
       isUniqueOpened: true,
       menu: [
         {
-          path: '/admin/home',
-          label: '首页',
+          path: '/teacher/sta',
+          label: '统计信息',
           icon: 's-home'
-        },
-        {
-          label: '用户管理',
+        }, {
+          label: '学生管理',
+          path: '/teacher/stu',
+          icon: 'user',
+        }, {
+          label: '计划管理',
           icon: 'user',
           children: [
             {
-              path: '/admin/user/add',
-              label: '添加用户',
-              icon: 'plus'
+              path: '/teacher/plan',
+              label: '全部招生计划',
+              icon: 'user'
             },
             {
-              path: '/admin/user/list',
-              label: '用户列表',
-              icon: 'user'
+              path: '/teacher/plan/add',
+              label: '新增招生计划',
+              icon: 'plus'
             }
           ]
         },
-        // {
-        //   label: '公告管理',
-        //   icon: 'tickets',
-        //   children: [
-        //     {
-        //       path: '/adminArticleUpdate',
-        //       name: 'adminArticleUpdate',
-        //       label: '新建公告',
-        //       icon: 'plus'
-        //     },
-        //     {
-        //       path: '/adminArticle',
-        //       name: 'adminArticle',
-        //       label: '全部公告',
-        //       icon: 'document-copy'
-        //     }
-        //   ]
-        // },
-        
-        // {
-        //   label: '分队管理',
-        //   icon: 'attract',
-        //   children: [
-        //     {
-        //       path: '/adminTeamAdd',
-        //       name: 'adminTeamAdd',
-        //       label: '新建分队',
-        //       icon: 'plus'
-        //     },
-        //     {
-        //       path: '/adminTeam',
-        //       name: 'adminTeam',
-        //       label: '全部分队',
-        //       icon: 'attract'
-        //     }
-        //   ]
-        // },
-        // {
-        //   label: '题目管理',
-        //   icon: 'files',
-        //   children: [
-        //     {
-        //       path: '/adminQuestionAdd',
-        //       name: 'adminQuestionAdd',
-        //       label: '新建题目',
-        //       icon: 'plus'
-        //     },
-        //     {
-        //       path: '/adminQuestion',
-        //       name: 'adminQuestion',
-        //       label: '全部题目',
-        //       icon: 'files'
-        //     }
-        //   ]
-        // }
       ]
     }
   },
@@ -118,12 +66,8 @@ export default {
     // },
     clickMenu (item, fitem) {
       console.log(item, fitem)
-      this.$router.push(
-        {
-          path: item.path
-        }
-      )
-      location.reload()
+      this.$router.push({ path: item.path })
+      // location.reload()
       // if (fitem) {
       //   this.$store.commit('selectTab', [{'label': fitem.label}, item])
       // } else {
