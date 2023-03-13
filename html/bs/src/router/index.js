@@ -9,6 +9,8 @@ const SubmitMessage = () => import('@/components/board/SubmitMessage');
 const User = () => import('@/components/user/User');
 const UserInfo = () => import('@/components/user/UserInfo');
 const ResetInfo = () => import('@/components/user/ResetInfo');
+const SearchMajor = () => import('@/components/SearchMajor');
+const SignUp = () => import('@/components/signup/SignUp')
 
 const AdminMain = () => import('@/components/admin/AdminMain')
 const AdminHome = () => import('@/components/admin/adminHome/AdminHome')
@@ -47,8 +49,15 @@ const router = new VueRouter({
             component: ResetInfo,
             children: []
         }],
+    }, {
+        path: '/searchMajor',
+        component: SearchMajor,
         children: []
-    }, 
+    },{
+        path: '/signUp',
+        component: SignUp,
+        children: []
+    },
     
     
     /* 以上是刘智宇添加的页面，以下是郝靖东添加的页面 */
