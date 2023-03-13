@@ -14,6 +14,22 @@ const SignUp = () => import('@/components/signup/SignUp')
 
 const AdminMain = () => import('@/components/admin/AdminMain')
 const AdminHome = () => import('@/components/admin/adminHome/AdminHome')
+const AdminMajor = () => import('@/components/admin/adminMajor/AdminMajor')
+const AdminMajorAdd = () => import('@/components/admin/adminMajor/AdminMajorAdd')
+const AdminMajorUpd = () => import('@/components/admin/adminMajor/AdminMajorUpd')
+const AdminNotice = () => import('@/components/admin/adminNotice/AdminNotice')
+const AdminNoticeAdd = () => import('@/components/admin/adminNotice/AdminNoticeAdd')
+const AdminUser = () => import('@/components/admin/adminUser/AdminUser')
+const AdminUserAdd = () => import('@/components/admin/adminUser/AdminUserAdd')
+
+const TeacherMain = () => import('@/components/teacher/TeacherMain')
+const TeacherPlan = () => import('@/components/teacher/teacherPlan/TeacherPlan')
+const TeacherPlanAdd = () => import('@/components/teacher/teacherPlan/TeacherPlanAdd')
+const TeacherPlanUpd = () => import('@/components/teacher/teacherPlan/TeacherPlanUpd')
+const TeacherSta = () => import('@/components/teacher/teacherSta/TeacherSta')
+const TeacherStu = () => import('@/components/teacher/teacherStu/TeacherStu')
+const TeacherStuDetail = () => import('@/components/teacher/teacherStu/TeacherStuDetail')
+const TeacherStuScore = () => import('@/components/teacher/teacherStu/TeacherStuScore')
 
 const router = new VueRouter({
     routes: [{
@@ -68,7 +84,54 @@ const router = new VueRouter({
         children: [{
             path: '/admin/home',
             component: AdminHome
+        }, {
+            path: '/admin/major',
+            component: AdminMajor
+        }, {
+            path: '/admin/major/add',
+            component: AdminMajorAdd
+        }, {
+            path: '/admin/major/upd', //query 传参
+            component: AdminMajorUpd
+        }, {
+            path: '/admin/notice',
+            component: AdminNotice
+        }, {
+            path: '/admin/notice/add',
+            component: AdminNoticeAdd
+        }, {
+            path: '/admin/user',
+            component: AdminUser
+        }, {
+            path: '/admin/user/add',
+            component: AdminUserAdd
         },]
+    }, {
+        path: '/teacher',
+        component: TeacherMain,
+        redirect: '/teacher/plan',
+        children: [{
+            path: '/teacher/plan',
+            component: TeacherPlan
+        }, {
+            path: '/teacher/plan/add',
+            component: TeacherPlanAdd
+        }, {
+            path: '/teacher/plan/upd', //query 传参
+            component: TeacherPlanUpd
+        }, {
+            path: '/teacher/sta', 
+            component: TeacherSta
+        }, {
+            path: '/teacher/stu',
+            component: TeacherStu
+        }, {
+            path: '/teacher/stu/detail', //query 传参
+            component: TeacherStuDetail
+        }, {
+            path: '/teacher/stu/score',
+            component: TeacherStuScore
+        }]
     }]
 })
 router.beforeEach((to, from, next) => {
